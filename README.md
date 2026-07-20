@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hyundai Bio Website
 
-## Getting Started
+Hyundai Bio 新官网的基础工程。当前版本只包含页面结构、媒体占位和 Cloudflare Workers 配置，不包含正式公司内容、电商、后台或表单服务。
 
-First, run the development server:
+## 本地开发
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+浏览器打开 `http://localhost:3000`，根路径会跳转到英文站 `/en`。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+语言入口：
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/en`：英文
+- `/zh`：中文
+- `/ko`：韩文
 
-## Learn More
+## 验证
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+npm run build
+npm run preview
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`preview` 会使用 Cloudflare Workers 的本地运行时，与普通的 Next.js 开发服务器不同。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 内容位置
 
-## Deploy on Vercel
+- `src/app/[locale]/`：三语动态路由和公共布局
+- `messages/`：英文、中文、韩文翻译
+- `src/i18n/`：语言校验和翻译加载
+- `src/content/`：产品、新闻等共享数据
+- `src/components/`：可复用页面组件
+- `src/lib/media.ts`：R2 媒体地址入口
+- `public/`：只放本地开发需要的小型静态文件
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## R2 媒体
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_MEDIA_BASE_URL` 改成正式 R2 自定义域名，例如：
+
+```text
+NEXT_PUBLIC_MEDIA_BASE_URL=https://media.your-domain.com
+```
+
+R2 只负责媒体存储；正式域名与 Bucket 建立后，再更新 `next.config.ts` 中允许的媒体域名。
+
+## Cloudflare
+
+- `wrangler.jsonc`：Workers 配置
+- `open-next.config.ts`：OpenNext Cloudflare 适配器配置
+- `npm run deploy`：未来确认 Cloudflare 账户和域名后再使用
+
+当前没有执行部署，也没有关联远程 GitHub 仓库。
