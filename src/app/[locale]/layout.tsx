@@ -5,8 +5,6 @@ import { Navbar } from "@/components/Navbar";
 import { htmlLang, isLocale, locales } from "@/i18n/config";
 import { getMessages } from "@/i18n/messages";
 
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
