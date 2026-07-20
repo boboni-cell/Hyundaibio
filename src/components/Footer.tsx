@@ -29,7 +29,8 @@ export function Footer({ locale, messages }: { locale: Locale; messages: Message
           <div>
             <p className="footer-heading">{f.contact}</p>
             <Link href={`/${locale}/contact`}>{f.general}</Link>
-            <span>{f.pending}</span>
+            <a href="tel:+821024158525">+82-10-2415-8525</a>
+            <a href="mailto:mariobio@naver.com">mariobio@naver.com</a>
           </div>
         </div>
       </div>
