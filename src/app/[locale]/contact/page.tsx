@@ -1,22 +1,26 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n/messages";
 
-const contactCopy: Record<Locale, { description: string; heading: string; address: string }> = {
+const contactCopy: Record<Locale, { description: string; heading: string; address: string; inquiry: string }> = {
   en: {
     description: "Contact Hyundai Bio for product inquiries, wholesale partnerships, and global distribution opportunities.",
     heading: "Let’s build a trusted partnership.",
     address: "Address",
+    inquiry: "Business inquiry",
   },
   zh: {
     description: "欢迎就产品咨询、批发合作与全球经销机会联系 Hyundai Bio。",
     heading: "与我们建立值得信赖的合作关系。",
     address: "公司地址",
+    inquiry: "商务咨询",
   },
   ko: {
     description: "제품 문의, 도매 파트너십 및 글로벌 유통 협력에 대해 현대바이오로 연락해 주세요.",
     heading: "신뢰할 수 있는 파트너십을 시작하세요.",
     address: "회사 주소",
+    inquiry: "비즈니스 문의",
   },
 };
 
@@ -37,7 +41,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero contact-hero">
         <div className="page-container">
           <p className="section-kicker light">{messages.navigation.contact}</p>
           <h1>{messages.contact.title}</h1>
@@ -46,8 +50,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       </section>
       <section className="contact-section page-container">
         <div className="contact-heading">
-          <p className="section-kicker">HYUNDAI BIO</p>
-          <h2>{copy.heading}</h2>
+          <div>
+            <p className="section-kicker">HYUNDAI BIO</p>
+            <h2>{copy.heading}</h2>
+          </div>
+          <Link className="outline-link" href={`/${locale}/contact/inquiry`}>{copy.inquiry} <span>→</span></Link>
         </div>
         <div className="contact-grid">
           {contactItems.map((item) => (
